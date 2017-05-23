@@ -27,8 +27,6 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
 
     display->setPalette(palette);
 
-
-
     // Creates operation buttons
     addButton = createButton(tr("+"), SLOT(changeModeToAdd()), true);
     subButton = createButton(tr("-"), SLOT(changeModeToSub()), true);
