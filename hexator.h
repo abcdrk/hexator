@@ -32,7 +32,7 @@ private:
    QPushButton *clearButton;
    QPushButton *digitButtons[16];
 
-   QPushButton *createButton(const QString &text, const char *member, bool isOperand = false);
+   QPushButton *createButton(const QString &text, const char *member, bool isOperand = false, bool isChar = false);
 
    Mode currentMode;
    int savedNum;

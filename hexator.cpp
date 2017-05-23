@@ -14,7 +14,7 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
     display->setAlignment(Qt::AlignRight);
     display->setReadOnly(true);
     display->setMaxLength(10);
-    display->setFixedHeight(100);
+    display->setFixedHeight(70);
     display->setFixedWidth(303);
     QFont font = display->font();
     font.setPointSize(48);
@@ -41,7 +41,7 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
     char ascii = 0;
     for (int i = 10; i < 16; i++){
         ascii = i + 55;
-        digitButtons[i] = createButton(QString(ascii), SLOT( pressDigit() ));
+        digitButtons[i] = createButton(QString(ascii), SLOT( pressDigit() ), false , true);
     }
 
     // Customizing layout
@@ -81,7 +81,7 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
     clear();
 }
 
-QPushButton *Hexator::createButton(const QString &text, const char *member, bool isOperand)
+QPushButton *Hexator::createButton(const QString &text, const char *member, bool isOperand, bool isChar)
 {
     QPushButton *button = new QPushButton(text);
     connect(button, SIGNAL(clicked()), this, member);
@@ -90,13 +90,21 @@ QPushButton *Hexator::createButton(const QString &text, const char *member, bool
     button->setAutoFillBackground(true);
     button->setFixedWidth(75);
     button->setFixedHeight(75);
-    QPalette palette = button->palette();
-    if(isOperand)
-        palette.setColor(QPalette::Button, QColor(100, 100, 100));
-    else
-        palette.setColor(QPalette::Button, QColor(100, 43, 100));
 
-    palette.setColor(QPalette::ButtonText,Qt::white);
+    QPalette palette = button->palette();
+    if(isOperand){
+        palette.setColor(QPalette::Button, QColor(150, 150, 150));
+        palette.setColor(QPalette::ButtonText, QColor(75, 75, 75));
+    }
+    else if(isChar){
+        palette.setColor(QPalette::Button, QColor(70, 33, 70));
+        palette.setColor(QPalette::ButtonText, QColor(255, 255, 255));
+    }
+    else {
+        palette.setColor(QPalette::Button, QColor(100, 43, 100));
+        palette.setColor(QPalette::ButtonText, QColor(255, 255, 255));
+    }
+
     button->setPalette(palette);
     QFont font = button->font();
     font.setPointSize(32);
