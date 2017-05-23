@@ -78,6 +78,7 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
 
     setLayout(mainLayout);
     setWindowTitle(tr("Hexator"));
+    setWindowIcon(QIcon(":/logo.png"));
     clear();
 }
 
