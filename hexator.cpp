@@ -171,8 +171,8 @@ void Hexator::changeModeToSub(){
 // Stores the displayed value as second number and makes the calculations according to their operation
 // Displayes the result on the screen.
 void Hexator::calculate(){
-    int secondNum = getNumberFromDisplay();
-    int result = 0;
+    long secondNum = getNumberFromDisplay();
+    long result = 0;
     if(currentMode == Addition && !lastButtonWasMode){
         result = savedNum + secondNum;
         setDisplayNumber(result);
@@ -229,7 +229,7 @@ void Hexator::customizeDisplay(){
     display->setPalette(palette);
 }
 
-void Hexator::setDisplayNumber(int number){
+void Hexator::setDisplayNumber(long number){
     if(number < 0){
         number = number * -1;
         display->setText("-" + QString::number(number, 16).toUpper());
@@ -238,15 +238,15 @@ void Hexator::setDisplayNumber(int number){
     }
 }
 
-int Hexator::getNumberFromDisplay(){
+long Hexator::getNumberFromDisplay(){
     QString currentValue = display->text();
-    int number = 0;
+    long number = 0;
     bool ok;
     if (currentValue[0] == '-'){
         currentValue = currentValue.mid(1);
-        number = currentValue.toUInt(&ok, 16) * -1;
+        number = currentValue.toULong(&ok, 16) * -1;
     } else {
-        number = currentValue.toUInt(&ok, 16);
+        number = currentValue.toULong(&ok, 16);
     }
     return number;
 }

@@ -35,11 +35,11 @@ private:
    QPushButton *createButton(const QString &text, const char *member, bool isOperand = false, bool isChar = false);
 
    void customizeDisplay();
-   void setDisplayNumber(int number);
-   int getNumberFromDisplay();
+   void setDisplayNumber(long number);
+   long getNumberFromDisplay();
 
    Mode currentMode;
-   int savedNum;
+   long savedNum;
    bool lastButtonWasMode;
 
 };
