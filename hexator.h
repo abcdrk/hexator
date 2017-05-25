@@ -33,7 +33,9 @@ private:
    QPushButton *digitButtons[16];
 
    QPushButton *createButton(const QString &text, const char *member, bool isOperand = false, bool isChar = false);
-   void setDisplayNumber(const int *number);
+
+   void customizeDisplay();
+   void setDisplayNumber(int number);
    int getNumberFromDisplay();
 
    Mode currentMode;

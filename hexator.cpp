@@ -8,29 +8,12 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QSpacerItem>
-#include <QMessageBox>
-#include <limits.h>
-#include <math.h>
 
 Hexator::Hexator(QWidget *parent) : QWidget(parent)
 {
     // Creates calculator display and customizes it.
     display = new QLineEdit("0");
-    display->setAlignment(Qt::AlignRight);
-    display->setReadOnly(true);
-    display->setMaxLength(10);
-    display->setFixedHeight(70);
-    display->setFixedWidth(303);
-    QFont font = display->font();
-    font.setPointSize(48);
-    display->setFont(font);
-
-    QPalette palette = display->palette();
-    display->setAutoFillBackground(true);
-    palette.setColor(QPalette::Base, QColor(254, 204, 52));
-    palette.setColor(QPalette::Text, QColor(255, 255 ,255));
-
-    display->setPalette(palette);
+    customizeDisplay();
 
     // Creates operation buttons, connects them to their functions.
     // Operation Buttons: +  -  =  Clr
@@ -159,7 +142,6 @@ QPushButton *Hexator::createButton(const QString &text, const char *member, bool
     QFont font = button->font();
     font.setPointSize(32);
     button->setFont(font);
-
     return button;
 }
 
@@ -168,9 +150,7 @@ QPushButton *Hexator::createButton(const QString &text, const char *member, bool
 // Stores the value written in the display to use it in the calculation later.
 // Changes the mode to Addition and lastButtonWasMode to true.
 void Hexator::changeModeToAdd(){
-    QString currentValue = display->text();
-    bool ok;
-    savedNum = currentValue.toUInt(&ok, 16);
+    savedNum =  getNumberFromDisplay();
     lastButtonWasMode = true;
     currentMode = Addition;
 }
@@ -191,9 +171,7 @@ void Hexator::changeModeToSub(){
 // Stores the displayed value as second number and makes the calculations according to their operation
 // Displayes the result on the screen.
 void Hexator::calculate(){
-    QString currentValue = display->text();
-    bool ok;
-    int secondNum = currentValue.toUInt(&ok, 16);
+    int secondNum = getNumberFromDisplay();
     int result = 0;
     if(currentMode == Addition && !lastButtonWasMode){
         result = savedNum + secondNum;
@@ -233,12 +211,42 @@ void Hexator::pressDigit(){
     display->setText(currentValue + digitValue);
 }
 
-void setDisplayNumber(const int *number){
-    display->setText(QString::number(number, 16).toUpper());
+void Hexator::customizeDisplay(){
+    display->setAlignment(Qt::AlignRight);
+    display->setReadOnly(true);
+    display->setMaxLength(10);
+    display->setFixedHeight(70);
+    display->setFixedWidth(303);
+    QFont font = display->font();
+    font.setPointSize(48);
+    display->setFont(font);
+
+    QPalette palette = display->palette();
+    display->setAutoFillBackground(true);
+    palette.setColor(QPalette::Base, QColor(254, 204, 52));
+    palette.setColor(QPalette::Text, QColor(255, 255 ,255));
+
+    display->setPalette(palette);
 }
 
-int getNumberFromDisplay(){
+void Hexator::setDisplayNumber(int number){
+    if(number < 0){
+        number = number * -1;
+        display->setText("-" + QString::number(number, 16).toUpper());
+    } else {
+        display->setText(QString::number(number, 16).toUpper());
+    }
+}
+
+int Hexator::getNumberFromDisplay(){
     QString currentValue = display->text();
+    int number = 0;
     bool ok;
-    return currentValue.toUInt(&ok, 16);
+    if (currentValue[0] == '-'){
+        currentValue = currentValue.mid(1);
+        number = currentValue.toUInt(&ok, 16) * -1;
+    } else {
+        number = currentValue.toUInt(&ok, 16);
+    }
+    return number;
 }
