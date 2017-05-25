@@ -123,9 +123,7 @@ void Hexator::changeModeToAdd(){
 }
 
 void Hexator::changeModeToSub(){
-    QString currentValue = display->text();
-    bool ok;
-    savedNum = currentValue.toUInt(&ok, 16);
+    savedNum = getNumberFromDisplay();
     lastButtonWasMode = true;
     currentMode = Subtraction;
 }
@@ -138,13 +136,13 @@ void Hexator::calculate(){
     int result = 0;
     if(currentMode == Addition && !lastButtonWasMode){
         result = savedNum + secondNum;
-        display->setText(QString::number(result, 16).toUpper());
+        setDisplayNumber(result);
         currentMode = NotSet;
         savedNum = result;
     }
     else if(currentMode == Subtraction && !lastButtonWasMode){
         result = savedNum - secondNum;
-        display->setText(QString::number(result, 16).toUpper());
+        setDisplayNumber(result);
         currentMode = NotSet;
         savedNum = result;
     }
@@ -170,10 +168,12 @@ void Hexator::pressDigit(){
     display->setText(currentValue + digitValue);
 }
 
-
-/*
-Hexator::~Hexator()
-{
-
+void setDisplayNumber(const int *number){
+    display->setText(QString::number(number, 16).toUpper());
 }
-*/
+
+int getNumberFromDisplay(){
+    QString currentValue = display->text();
+    bool ok;
+    return currentValue.toUInt(&ok, 16);
+}
