@@ -11,7 +11,7 @@
 
 Hexator::Hexator(QWidget *parent) : QWidget(parent)
 {
-    // Creates calculator display and customizes it.
+    // Creates calculator display.
     display = new QLineEdit("0");
     customizeDisplay();
 
@@ -211,6 +211,8 @@ void Hexator::pressDigit(){
     display->setText(currentValue + digitValue);
 }
 
+// -------------------------customizeDisplay()----------------------------------------------------------
+// This method is to customize the display of the calculator.
 void Hexator::customizeDisplay(){
     display->setAlignment(Qt::AlignRight);
     display->setReadOnly(true);
@@ -229,6 +231,9 @@ void Hexator::customizeDisplay(){
     display->setPalette(palette);
 }
 
+// -------------------------setDisplayNumber()----------------------------------------------------------
+// This method is to print the given value to the display.
+// Negative numbers are also handled here.
 void Hexator::setDisplayNumber(long number){
     if(number < 0){
         number = number * -1;
@@ -238,6 +243,9 @@ void Hexator::setDisplayNumber(long number){
     }
 }
 
+// -------------------------getNumberFromDisplay()----------------------------------------------------------
+// This method is to get and evaluate the number pressed in the display.
+// Returns the entered final number (long).
 long Hexator::getNumberFromDisplay(){
     QString currentValue = display->text();
     long number = 0;
