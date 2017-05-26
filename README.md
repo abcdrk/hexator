@@ -1,2 +1,2 @@
 ## Hexator
-Cool calculator
+a Cool Hexadecimal Calculator.

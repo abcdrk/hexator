@@ -103,7 +103,6 @@ Hexator::Hexator(QWidget *parent) : QWidget(parent)
     // Final touches done and initializing the calulator with clear()
     setLayout(mainLayout);
     setWindowTitle(tr("Hexator"));
-    setWindowIcon(QIcon(":/logo.png"));
     clear();
 }
 
